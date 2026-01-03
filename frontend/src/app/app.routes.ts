@@ -4,7 +4,7 @@ import { ExperienceComponent } from './experience/experience';
 import { AboutComponent } from './about/about';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/blog', pathMatch: 'full' },
+  { path: '', redirectTo: '/about', pathMatch: 'full' },
   { path: 'blog', component: BlogComponent },
   { path: 'experience', component: ExperienceComponent },
   { path: 'about', component: AboutComponent },
