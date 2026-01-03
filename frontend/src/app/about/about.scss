@@ -1,0 +1,27 @@
+.about-container {
+  h1 {
+    margin-bottom: 1rem;
+  }
+
+  .lead {
+    color: #6c757d;
+    margin-bottom: 2rem;
+  }
+
+  .card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .card-title {
+      color: #495057;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .skills-list {
+    .badge {
+      font-size: 0.9rem;
+      padding: 0.5rem 0.75rem;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+<div class="blog-container">
+  <h1>Blog</h1>
+  <p class="lead">Read the latest articles and insights.</p>
+
+  <div class="row mt-4">
+    @for (post of posts(); track post.title) {
+    <div class="col-md-12 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ post.title }}</h5>
+          <p class="text-muted">{{ post.created }}</p>
+          <p class="card-text">{{ post.body }}</p>
+          <a href="#" class="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>
