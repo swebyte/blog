@@ -15,10 +15,23 @@
     <div class="posts-list mt-4">
       @for (post of posts(); track post.title) {
       <article class="post-item">
-        <h2 class="post-title">{{ post.title }}</h2>
-        <p class="post-date">{{ post.created_at | date : 'MMMM d, yyyy' }}</p>
+        <div class="d-flex justify-content-between align-items-start">
+          <div class="flex-grow-1">
+            <h2 class="post-title">{{ post.title }}</h2>
+            <p class="post-date">{{ post.created_at | date : 'MMMM d, yyyy' }}</p>
+          </div>
+          @if (authService.isAuthenticated()) {
+          <button
+            class="btn btn-link text-danger delete-btn"
+            (click)="deleteBlogPost(post.id)"
+            title="Delete post"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+          }
+        </div>
         <p class="post-body">{{ post.body }}</p>
-        <a href="#" class="read-more">Read More →</a>
+        <a [routerLink]="['/blog', post.id]" class="read-more">Read More →</a>
       </article>
       }
     </div>

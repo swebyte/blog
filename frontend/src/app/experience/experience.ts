@@ -6,6 +6,7 @@ import { ExperienceFormComponent } from '../experience-form/experience-form';
 import { environment } from '../../environments/environment';
 
 interface Experience {
+  id: number;
   title: string;
   company: string;
   description: string;
@@ -42,6 +43,20 @@ export class ExperienceComponent {
           console.error('Failed to load experiences:', error);
         },
       });
+  }
+
+  deleteExperience(id: number) {
+    if (confirm('Are you sure you want to delete this experience?')) {
+      this.http.delete(`${environment.apiBaseUrl}/experience?id=eq.${id}`).subscribe({
+        next: () => {
+          console.log('Experience deleted');
+          this.loadExperiences();
+        },
+        error: (error) => {
+          console.error('Failed to delete experience:', error);
+        },
+      });
+    }
   }
 
   openNewExperienceModal() {

@@ -26,17 +26,14 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "server": "src/main.server.ts",
-            "outputMode": "server",
+            "outputMode": "static",
+            "prerender": true,
             "ssr": {
               "entry": "src/server.ts"
             },
-            "polyfills": [
-              "@angular/localize/init"
-            ]
+            "polyfills": ["@angular/localize/init"]
           },
           "configurations": {
             "production": {
@@ -88,12 +85,8 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "polyfills": [
-              "@angular/localize/init"
-            ]
+            "styles": ["src/styles.scss"],
+            "polyfills": ["@angular/localize/init"]
           }
         }
       }
