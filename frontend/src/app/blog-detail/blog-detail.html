@@ -35,7 +35,7 @@
       </div>
 
       <div class="post-body">
-        {{ post()!.body }}
+        <markdown [data]="post()!.body"></markdown>
       </div>
     </article>
     }

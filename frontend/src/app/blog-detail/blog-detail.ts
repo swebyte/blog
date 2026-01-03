@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { MarkdownComponent } from 'ngx-markdown';
 import { AuthService } from '../services/auth.service';
 import { environment } from '../../environments/environment';
 
@@ -15,7 +16,7 @@ interface BlogPost {
 
 @Component({
   selector: 'app-blog-detail',
-  imports: [DatePipe],
+  imports: [DatePipe, MarkdownComponent],
   templateUrl: './blog-detail.html',
   styleUrl: './blog-detail.scss',
 })
