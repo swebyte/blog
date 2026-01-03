@@ -2,7 +2,9 @@ version: "3.8"
 
 services:
   postgres:
-    image: postgres:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile.postgres
     container_name: my_postgres
     environment:
       POSTGRES_USER: admin
@@ -12,6 +14,7 @@ services:
       - ./database:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
+    command: postgres -c 'app.jwt_secret=c744f1ad10af97877d0e9468c3477f9bfb07ef83c5129ef8bef6934e3692f69e'
 
   postgrest:
     build:

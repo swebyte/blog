@@ -1,5 +1,21 @@
-### Fetch all rows from the blog_table
+### Fetch blog data
 GET http://localhost:3000/blog
+
+### Fetch experience data
+GET http://localhost:3000/experience
+
+### Login to get JWT token
+# @name login
+POST http://localhost:3000/rpc/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Set token from login response
+@token = {{login.response.body.token}}
 
 ### Fetch a specific row by ID
 GET http://localhost:3000/blog?id=eq.1
@@ -7,14 +23,12 @@ GET http://localhost:3000/blog?id=eq.1
 ### Fetch rows with a filter (e.g., title contains 'test')
 GET http://localhost:3000/blog?title=like.*test*
 
-### Define a variable for the token
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjczOTA0NzAsInJvbGUiOiJhdXRoZW50aWNhdGVkIn0.e-qRYVZOfezU5hthaxChj6bWJDMTBTt0KcALKxS0yhI
-### Insert a new row into the blog_table with authentication
+### Insert a new blog post (requires authentication)
 POST http://localhost:3000/blog
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "title": "My First Blog Post",
+  "title": "My Second Blog Post",
   "body": "This is the content of my first blog post."
 }
