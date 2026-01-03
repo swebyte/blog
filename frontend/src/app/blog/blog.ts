@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 interface BlogPost {
   title: string;
@@ -18,7 +19,7 @@ export class BlogComponent {
   protected posts = signal<BlogPost[]>([]);
 
   ngOnInit() {
-    this.http.get<BlogPost[]>('http://localhost:3000/blog').subscribe((data) => {
+    this.http.get<BlogPost[]>(`${environment.apiBaseUrl}/blog`).subscribe((data) => {
       this.posts.set(data);
     });
   }

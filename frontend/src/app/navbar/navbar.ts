@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgbCollapse, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from '../login/login';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,6 +13,7 @@ import { LoginComponent } from '../login/login';
 export class NavbarComponent {
   isMenuCollapsed = true;
   private modalService = inject(NgbModal);
+  protected authService = inject(AuthService);
 
   openLogin() {
     const modalRef = this.modalService.open(LoginComponent, {
@@ -27,5 +29,10 @@ export class NavbarComponent {
         console.log('Login dismissed');
       }
     );
+  }
+
+  logout() {
+    this.authService.logout();
+    console.log('User logged out');
   }
 }

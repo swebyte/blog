@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,13 +11,22 @@ import { FormsModule } from '@angular/forms';
 })
 export class LoginComponent {
   activeModal = inject(NgbActiveModal);
+  private authService = inject(AuthService);
 
   email = '';
   password = '';
+  errorMessage = '';
 
   onSubmit() {
-    // Handle login logic here
-    console.log('Login attempt:', { email: this.email, password: this.password });
-    this.activeModal.close({ email: this.email, password: this.password });
+    this.authService.login({ email: this.email, password: this.password }).subscribe({
+      next: (response) => {
+        console.log('Login successful:', response);
+        this.activeModal.close(response);
+      },
+      error: (error) => {
+        console.error('Login failed:', error);
+        this.errorMessage = 'Login failed. Please check your credentials.';
+      },
+    });
   }
 }
