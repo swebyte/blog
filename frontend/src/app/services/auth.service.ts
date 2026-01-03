@@ -1,4 +1,5 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal, computed, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -20,26 +21,42 @@ interface LoginCredentials {
 })
 export class AuthService {
   private http = inject(HttpClient);
+  private platformId = inject(PLATFORM_ID);
   private tokenKey = 'auth_token';
+  private authToken = signal<string | null>(this.getTokenFromStorage());
+
+  // Computed signal for authentication status
+  isAuthenticated = computed(() => !!this.authToken());
+
+  private getTokenFromStorage(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem(this.tokenKey);
+    }
+    return null;
+  }
 
   login(credentials: LoginCredentials): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${environment.apiBaseUrl}/rpc/login`, credentials).pipe(
       tap((response) => {
-        // Store token in localStorage
-        localStorage.setItem(this.tokenKey, response.token);
+        if (isPlatformBrowser(this.platformId)) {
+          // Store token in localStorage
+          localStorage.setItem(this.tokenKey, response.token);
+        }
+        // Update signal
+        this.authToken.set(response.token);
       })
     );
   }
 
   logout(): void {
-    localStorage.removeItem(this.tokenKey);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem(this.tokenKey);
+    }
+    // Update signal
+    this.authToken.set(null);
   }
 
   getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
-  }
-
-  isAuthenticated(): boolean {
-    return !!this.getToken();
+    return this.authToken();
   }
 }

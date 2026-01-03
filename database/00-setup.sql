@@ -93,6 +93,7 @@ grant select on api.blog to anon;
 grant select on api.experience to anon;
 
 grant select, insert, update, delete on api.blog to authenticated;
+grant select, insert, update, delete on api.experience to authenticated;
 
 -- Grant execute permission on login function to anon
 grant execute on function api.login(text, text) to anon;

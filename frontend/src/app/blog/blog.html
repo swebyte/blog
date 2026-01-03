@@ -1,13 +1,22 @@
 <div class="container mt-4">
   <div class="blog-container">
-    <h1>Blog</h1>
-    <p class="lead">Read the latest articles and insights.</p>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h1>Blog</h1>
+        <p class="lead">Read the latest articles and insights.</p>
+      </div>
+      @if (authService.isAuthenticated()) {
+      <button class="btn btn-primary" (click)="openNewBlogModal()">
+        <i class="bi bi-plus-circle"></i> New Blog
+      </button>
+      }
+    </div>
 
     <div class="posts-list mt-4">
       @for (post of posts(); track post.title) {
       <article class="post-item">
         <h2 class="post-title">{{ post.title }}</h2>
-        <p class="post-date">{{ post.created }}</p>
+        <p class="post-date">{{ post.created_at | date : 'MMMM d, yyyy' }}</p>
         <p class="post-body">{{ post.body }}</p>
         <a href="#" class="read-more">Read More →</a>
       </article>
