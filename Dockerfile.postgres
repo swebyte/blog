@@ -8,3 +8,7 @@ RUN apt-get update && \
     make install && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/pgjwt
+
+# Copy migration script and make it executable
+COPY database/migrate.sh /docker-entrypoint-initdb.d/99-migrate.sh
+RUN chmod +x /docker-entrypoint-initdb.d/99-migrate.sh

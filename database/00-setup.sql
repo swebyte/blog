@@ -1,6 +1,13 @@
 create extension if not exists pgcrypto;
 create extension if not exists pgjwt;
 
+-- Migration tracking table
+create table if not exists _migrations (
+  id integer primary key,
+  name text not null unique,
+  applied_at timestamptz not null default now()
+);
+
 create schema api;
 
 create table api.blog (
