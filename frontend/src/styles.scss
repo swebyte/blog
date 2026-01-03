@@ -38,3 +38,12 @@ router-outlet ~ * {
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+.modal-dialog {
+  box-shadow: none !important;
+}
+
+.modal-content {
+  background-color: #fff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
