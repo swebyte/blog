@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h5 class="modal-title">New Blog Post</h5>
+  <h5 class="modal-title">{{ isEditMode ? 'Edit Blog Post' : 'New Blog Post' }}</h5>
   <button
     type="button"
     class="btn-close"
@@ -63,7 +63,9 @@
       }
     </div>
     <div class="d-grid gap-2">
-      <button type="submit" class="btn btn-primary">Publish</button>
+      <button type="submit" class="btn btn-primary">
+        {{ isEditMode ? 'Update Post' : 'Publish' }}
+      </button>
       <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">
         Cancel
       </button>

@@ -3,7 +3,9 @@ import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { MarkdownComponent } from 'ngx-markdown';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../services/auth.service';
+import { BlogFormComponent } from '../blog-form/blog-form';
 import { environment } from '../../environments/environment';
 
 interface BlogPost {
@@ -24,6 +26,7 @@ export class BlogDetailComponent {
   private http = inject(HttpClient);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private modalService = inject(NgbModal);
   protected authService = inject(AuthService);
   protected post = signal<BlogPost | null>(null);
   protected loading = signal(true);
@@ -72,6 +75,27 @@ export class BlogDetailComponent {
         },
       });
     }
+  }
+
+  openEditBlogModal() {
+    const currentPost = this.post();
+    if (!currentPost) return;
+
+    const modalRef = this.modalService.open(BlogFormComponent, {
+      centered: true,
+      size: 'lg',
+    });
+    modalRef.componentInstance.blogPost = currentPost;
+
+    modalRef.result.then(
+      (result) => {
+        console.log('Blog post updated:', result);
+        this.loadBlogPost(currentPost.id);
+      },
+      (reason) => {
+        console.log('Modal dismissed');
+      }
+    );
   }
 
   goBack() {

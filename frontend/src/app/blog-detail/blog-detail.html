@@ -24,13 +24,18 @@
           </p>
         </div>
         @if (authService.isAuthenticated()) {
-        <button
-          class="btn btn-link text-danger delete-btn"
-          (click)="deleteBlogPost()"
-          title="Delete post"
-        >
-          <i class="bi bi-trash"></i>
-        </button>
+        <div class="d-flex gap-1">
+          <button class="btn btn-link text-primary" (click)="openEditBlogModal()" title="Edit post">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button
+            class="btn btn-link text-danger delete-btn"
+            (click)="deleteBlogPost()"
+            title="Delete post"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
         }
       </div>
 
