@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MarkdownComponent } from 'ngx-markdown';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { ImageUploadComponent } from '../image-upload/image-upload';
 
 interface ExperienceData {
   title: string;
@@ -22,7 +23,7 @@ interface Experience extends ExperienceData {
 
 @Component({
   selector: 'app-experience-form',
-  imports: [FormsModule, MarkdownComponent],
+  imports: [FormsModule, MarkdownComponent, ImageUploadComponent],
   templateUrl: './experience-form.html',
   styleUrl: './experience-form.scss',
 })
@@ -56,6 +57,12 @@ export class ExperienceFormComponent {
       this.end_date = this.experience.end_date || '';
       this.isCurrentPosition = !this.experience.end_date;
     }
+  }
+
+  onImageUploaded(imageUrl: string) {
+    // Insert HTML img tag with editable width attribute
+    const html = `\n<img src="${imageUrl}" alt="Image" width="600">\n`;
+    this.description = this.description + html;
   }
 
   onSubmit() {

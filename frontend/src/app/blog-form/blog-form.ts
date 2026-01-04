@@ -51,9 +51,9 @@ export class BlogFormComponent {
   }
 
   onImageUploaded(imageUrl: string) {
-    // Insert markdown image syntax at cursor position or end of text
-    const markdown = `\n![Image](${imageUrl})\n`;
-    this.body = this.body + markdown;
+    // Insert HTML img tag with editable width attribute
+    const html = `\n<img src="${imageUrl}" alt="Image" width="600">\n`;
+    this.body = this.body + html;
   }
 
   onSubmit() {

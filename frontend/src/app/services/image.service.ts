@@ -50,8 +50,4 @@ export class ImageService {
       reader.readAsDataURL(file);
     });
   }
-
-  getImageUrl(id: number): string {
-    return `${this.apiUrl}/rpc/file?file_id=${id}`;
-  }
 }
