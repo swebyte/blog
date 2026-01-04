@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -12,6 +12,12 @@ interface ExperienceData {
   end_date: string | null;
 }
 
+interface Experience extends ExperienceData {
+  id: number;
+  created_at: string;
+  user_id: string;
+}
+
 @Component({
   selector: 'app-experience-form',
   imports: [FormsModule],
@@ -22,6 +28,8 @@ export class ExperienceFormComponent {
   activeModal = inject(NgbActiveModal);
   private http = inject(HttpClient);
 
+  @Input() experience?: Experience;
+
   title = '';
   company = '';
   description = '';
@@ -29,6 +37,21 @@ export class ExperienceFormComponent {
   end_date = '';
   isCurrentPosition = false;
   errorMessage = '';
+
+  get isEditMode(): boolean {
+    return !!this.experience;
+  }
+
+  ngOnInit() {
+    if (this.experience) {
+      this.title = this.experience.title;
+      this.company = this.experience.company;
+      this.description = this.experience.description;
+      this.start_date = this.experience.start_date;
+      this.end_date = this.experience.end_date || '';
+      this.isCurrentPosition = !this.experience.end_date;
+    }
+  }
 
   onSubmit() {
     const experienceData: ExperienceData = {
@@ -39,16 +62,33 @@ export class ExperienceFormComponent {
       end_date: this.isCurrentPosition ? null : this.end_date,
     };
 
-    this.http.post(`${environment.apiBaseUrl}/experience`, experienceData).subscribe({
-      next: (response) => {
-        console.log('Experience created:', response);
-        this.activeModal.close(response);
-      },
-      error: (error) => {
-        console.error('Failed to create experience:', error);
-        this.errorMessage = 'Failed to create experience. Please try again.';
-      },
-    });
+    if (this.isEditMode && this.experience) {
+      // Update existing experience
+      this.http
+        .patch(`${environment.apiBaseUrl}/experience?id=eq.${this.experience.id}`, experienceData)
+        .subscribe({
+          next: (response) => {
+            console.log('Experience updated:', response);
+            this.activeModal.close(response);
+          },
+          error: (error) => {
+            console.error('Failed to update experience:', error);
+            this.errorMessage = 'Failed to update experience. Please try again.';
+          },
+        });
+    } else {
+      // Create new experience
+      this.http.post(`${environment.apiBaseUrl}/experience`, experienceData).subscribe({
+        next: (response) => {
+          console.log('Experience created:', response);
+          this.activeModal.close(response);
+        },
+        error: (error) => {
+          console.error('Failed to create experience:', error);
+          this.errorMessage = 'Failed to create experience. Please try again.';
+        },
+      });
+    }
   }
 
   onCurrentPositionChange() {

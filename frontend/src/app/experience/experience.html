@@ -26,16 +26,27 @@
                 </p>
               </div>
               @if (authService.isAuthenticated()) {
-              <button
-                class="btn btn-link text-danger delete-btn"
-                (click)="deleteExperience(exp.id)"
-                title="Delete experience"
-              >
-                <i class="bi bi-trash"></i>
-              </button>
+              <div class="d-flex gap-1">
+                <button
+                  class="btn btn-link text-primary"
+                  (click)="openEditExperienceModal(exp)"
+                  title="Edit experience"
+                >
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button
+                  class="btn btn-link text-danger delete-btn"
+                  (click)="deleteExperience(exp.id)"
+                  title="Delete experience"
+                >
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
               }
             </div>
-            <p class="card-text">{{ exp.description }}</p>
+            <div class="card-text">
+              <markdown [data]="exp.description"></markdown>
+            </div>
           </div>
         </div>
       </div>

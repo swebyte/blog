@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
+import { MarkdownComponent } from 'ngx-markdown';
 import { AuthService } from '../services/auth.service';
 import { ExperienceFormComponent } from '../experience-form/experience-form';
 import { environment } from '../../environments/environment';
@@ -18,7 +19,7 @@ interface Experience {
 
 @Component({
   selector: 'app-experience',
-  imports: [],
+  imports: [MarkdownComponent],
   templateUrl: './experience.html',
   styleUrl: './experience.scss',
 })
@@ -68,6 +69,24 @@ export class ExperienceComponent {
     modalRef.result.then(
       (result) => {
         console.log('Experience created:', result);
+        this.loadExperiences();
+      },
+      (reason) => {
+        console.log('Modal dismissed');
+      }
+    );
+  }
+
+  openEditExperienceModal(experience: Experience) {
+    const modalRef = this.modalService.open(ExperienceFormComponent, {
+      centered: true,
+      size: 'lg',
+    });
+    modalRef.componentInstance.experience = experience;
+
+    modalRef.result.then(
+      (result) => {
+        console.log('Experience updated:', result);
         this.loadExperiences();
       },
       (reason) => {

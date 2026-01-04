@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h5 class="modal-title">New Experience</h5>
+  <h5 class="modal-title">{{ isEditMode ? 'Edit Experience' : 'New Experience' }}</h5>
   <button
     type="button"
     class="btn-close"
@@ -85,7 +85,9 @@
       <label class="form-check-label" for="isCurrentPosition"> I currently work here </label>
     </div>
     <div class="d-grid gap-2">
-      <button type="submit" class="btn btn-primary">Save Experience</button>
+      <button type="submit" class="btn btn-primary">
+        {{ isEditMode ? 'Update Experience' : 'Save Experience' }}
+      </button>
       <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">
         Cancel
       </button>
