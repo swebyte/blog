@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { MarkdownComponent } from 'ngx-markdown';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { ImageUploadComponent } from '../image-upload/image-upload';
+import { AuthService } from '../services/auth.service';
 
 interface BlogPostData {
   title: string;
@@ -19,7 +21,7 @@ interface BlogPost extends BlogPostData {
 
 @Component({
   selector: 'app-blog-form',
-  imports: [FormsModule, MarkdownComponent],
+  imports: [FormsModule, MarkdownComponent, ImageUploadComponent],
   templateUrl: './blog-form.html',
   styleUrl: './blog-form.scss',
 })
@@ -28,6 +30,7 @@ export class BlogFormComponent {
   private platformId = inject(PLATFORM_ID);
   isBrowser = isPlatformBrowser(this.platformId);
   private http = inject(HttpClient);
+  private authService = inject(AuthService);
 
   @Input() blogPost?: BlogPost;
 
@@ -47,7 +50,19 @@ export class BlogFormComponent {
     }
   }
 
+  onImageUploaded(imageUrl: string) {
+    // Insert markdown image syntax at cursor position or end of text
+    const markdown = `\n![Image](${imageUrl})\n`;
+    this.body = this.body + markdown;
+  }
+
   onSubmit() {
+    const userId = this.authService.getUserId();
+    if (!userId) {
+      this.errorMessage = 'You must be logged in to create/edit posts';
+      return;
+    }
+
     const blogData: BlogPostData = {
       title: this.title,
       body: this.body,
@@ -68,8 +83,9 @@ export class BlogFormComponent {
           },
         });
     } else {
-      // Create new blog post
-      this.http.post(`${environment.apiBaseUrl}/blog`, blogData).subscribe({
+      // Create new blog post - include user_id
+      const newBlogData = { ...blogData, user_id: userId };
+      this.http.post(`${environment.apiBaseUrl}/blog`, newBlogData).subscribe({
         next: (response) => {
           console.log('Blog post created:', response);
           this.activeModal.close(response);

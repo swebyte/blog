@@ -26,6 +26,7 @@
     </div>
     <div class="mb-3">
       <label for="body" class="form-label">Content (Markdown supported)</label>
+      <app-image-upload (imageUploaded)="onImageUploaded($event)"></app-image-upload>
       <div class="d-flex gap-2 mb-2">
         <button
           type="button"

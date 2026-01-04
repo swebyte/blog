@@ -59,4 +59,16 @@ export class AuthService {
   getToken(): string | null {
     return this.authToken();
   }
+
+  getUserId(): number | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.user_id || null;
+    } catch {
+      return null;
+    }
+  }
 }

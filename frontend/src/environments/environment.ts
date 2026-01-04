@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://blogapi.swebyte.online',
+  apiBaseUrl: 'http://localhost:3000',
 };
