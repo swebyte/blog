@@ -36,6 +36,7 @@
     "@angular/ssr": "^20.3.13",
     "@ng-bootstrap/ng-bootstrap": "^19.0.1",
     "@popperjs/core": "^2.11.8",
+    "animejs": "^4.2.2",
     "bootstrap": "^5.3.6",
     "bootswatch": "^5.3.8",
     "express": "^5.1.0",
