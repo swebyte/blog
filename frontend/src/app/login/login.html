@@ -37,9 +37,11 @@
       <button type="submit" class="btn btn-primary">Login</button>
     </div>
   </form>
-  @if (errorMessage) {
-  <div class="alert alert-danger" role="alert">
-    {{ errorMessage }}
+  <div class="mb-3">
+    @if (errorMessage) {
+    <div class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+    }
   </div>
-  }
 </div>
