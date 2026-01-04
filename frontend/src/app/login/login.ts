@@ -13,8 +13,8 @@ export class LoginComponent {
   activeModal = inject(NgbActiveModal);
   private authService = inject(AuthService);
 
-  email = 'test@example.com';
-  password = 'password123';
+  email = '';
+  password = '';
   errorMessage = '';
 
   onSubmit() {

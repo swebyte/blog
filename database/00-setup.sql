@@ -46,11 +46,6 @@ create table api.users (
   created_at timestamptz not null default now()
 );
 
--- Insert a test user (password: 'password123')
-insert into api.users (email, password, role)
-values
-  ('test@example.com', crypt('password123', gen_salt('bf')), 'authenticated');
-
 -- Login function that returns JWT token
 create or replace function api.login(email text, password text)
 returns json as $$

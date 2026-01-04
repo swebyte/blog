@@ -1,9 +1,11 @@
-@baseUrl = http://localhost:3000
-# @baseUrl = https://blogapi.swebyte.online
+# @baseUrl = http://localhost:3000
+@baseUrl = https://blogapi.swebyte.online
 
 ### Fetch blog data
 GET {{baseUrl}}/blog
 
+### Fetch blog data with query parameters (e.g., order by created_at descending)
+GET {{baseUrl}}/blog?order=created_at.desc
 ### Fetch experience data
 GET {{baseUrl}}/experience
 
