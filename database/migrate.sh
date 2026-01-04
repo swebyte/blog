@@ -2,8 +2,8 @@
 set -e
 
 MIGRATIONS_DIR="/docker-entrypoint-initdb.d/.migrations"
-DB_USER="${POSTGRES_USER:-admin}"
-DB_NAME="${POSTGRES_DB:-mydb}"
+DB_USER="${POSTGRES_USER}"
+DB_NAME="${POSTGRES_DB}"
 
 echo "===================="
 echo "Running migrations..."

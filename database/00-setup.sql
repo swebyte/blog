@@ -98,7 +98,7 @@ grant select, insert, update, delete on api.experience to authenticated;
 -- Grant execute permission on login function to anon
 grant execute on function api.login(text, text) to anon;
 
-create role authenticator noinherit login password 'mysecretpassword';
-
+-- Create authenticator role without password (password set by next init script)
+create role authenticator noinherit login;
 grant anon to authenticator;
 grant authenticated to authenticator;
