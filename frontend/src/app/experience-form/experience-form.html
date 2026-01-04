@@ -37,16 +37,42 @@
       />
     </div>
     <div class="mb-3">
-      <label for="description" class="form-label">Description</label>
+      <label for="description" class="form-label">Description (Markdown supported)</label>
+      <div class="d-flex gap-2 mb-2">
+        <button
+          type="button"
+          class="btn btn-sm"
+          [class.btn-primary]="!showPreview"
+          [class.btn-outline-primary]="showPreview"
+          (click)="showPreview = false"
+        >
+          Edit
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm"
+          [class.btn-primary]="showPreview"
+          [class.btn-outline-primary]="!showPreview"
+          (click)="showPreview = true"
+        >
+          Preview
+        </button>
+      </div>
+      @if (!showPreview) {
       <textarea
         class="form-control"
         id="description"
         [(ngModel)]="description"
         name="description"
-        rows="4"
-        placeholder="Describe your role and responsibilities"
+        rows="10"
+        placeholder="Describe your role and responsibilities... (Markdown supported)"
         required
       ></textarea>
+      } @else {
+      <div class="border rounded p-3" style="min-height: 250px; background-color: #fff">
+        <markdown [data]="description || '*No content yet*'"></markdown>
+      </div>
+      }
     </div>
     <div class="row">
       <div class="col-md-6 mb-3">

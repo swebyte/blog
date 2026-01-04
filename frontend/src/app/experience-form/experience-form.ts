@@ -1,6 +1,8 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { MarkdownComponent } from 'ngx-markdown';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
@@ -20,12 +22,14 @@ interface Experience extends ExperienceData {
 
 @Component({
   selector: 'app-experience-form',
-  imports: [FormsModule],
+  imports: [FormsModule, MarkdownComponent],
   templateUrl: './experience-form.html',
   styleUrl: './experience-form.scss',
 })
 export class ExperienceFormComponent {
   activeModal = inject(NgbActiveModal);
+  private platformId = inject(PLATFORM_ID);
+  isBrowser = isPlatformBrowser(this.platformId);
   private http = inject(HttpClient);
 
   @Input() experience?: Experience;
@@ -37,6 +41,7 @@ export class ExperienceFormComponent {
   end_date = '';
   isCurrentPosition = false;
   errorMessage = '';
+  showPreview = false;
 
   get isEditMode(): boolean {
     return !!this.experience;
