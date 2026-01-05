@@ -1,8 +1,7 @@
-FROM postgres:latest
-
+FROM postgres:16
 # Install build dependencies and pgjwt extension
 RUN apt-get update && \
-    apt-get install -y git build-essential postgresql-server-dev-all && \
+    apt-get install -y git build-essential postgresql-server-dev-16 && \
     git clone https://github.com/michelp/pgjwt.git /tmp/pgjwt && \
     cd /tmp/pgjwt && \
     make install && \
